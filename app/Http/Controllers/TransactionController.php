@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,25 +99,30 @@ class TransactionController extends Controller
         return redirect()->route('transactions.index');
     }
 
+
+
+
+
     public function credits()
     {
-        $creditTransactions = Transaction::where('user_id', Auth::id())
-            ->where('type', 'Credit')
-            ->orderBy('created_at', 'asc')
-            ->get();
-            redirect()->route('Credits.index');
-        //return view('transactions.credits', compact('creditTransactions'));
+        // $creditTransactions = Transaction::where('user_id', Auth::id())
+        //     ->where('type', 'Credit')
+        //     ->orderBy('created_at', 'asc')
+        //     ->get();
+        //     //redirect()->route('Credits.index');
+        //     return view('transactions.credits', compact('creditTransactions'));
+
+
+            $transactions = Transaction::where('user_id', Auth::id())->where('type', 'Credit')->orderBy('created_at', 'asc')->get();
+            return view('transactions.credits', compact('transactions'));
     }
 
 
     public function debits()
     {
-        $debitTransactions = Transaction::where('user_id', Auth::id())
-            ->where('type', 'Debit')
-            ->orderBy('created_at', 'asc')
-            ->get();
-            redirect()->route('Debits.index');
-        //return view('transactions.debits', compact('debitTransactions'));
+        $transactions = Transaction::where('user_id', Auth::id())->where('type', 'Debit')->orderBy('created_at', 'asc')->get();
+            //redirect()->route('Debits.index');
+            return view('transactions.debits', compact('transactions'));
     }
 
 
